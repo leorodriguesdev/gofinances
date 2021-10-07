@@ -43,7 +43,7 @@ export function Dashboard() {
             amount:'R$ 59,00',
             category:{
                 name: 'Alimentação',
-                icon: 'cofee'
+                icon: 'coffee'
             },
             date:'10/04/2020'
         },

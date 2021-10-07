@@ -43,7 +43,7 @@ export function TransactionCard({data} : Props) {
                 <Category>
                 <Icon name={data.category.icon}/>
                 <CategoryName>
-                    {data.category}
+                    {data.category.name}
                 </CategoryName>
                 </Category>
                 <Date>
