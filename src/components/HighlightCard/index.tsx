@@ -19,8 +19,8 @@ interface Props {
 } 
 
 const icon = {
-    up: 'arrow-up-circle',
-    down: 'arrow-down-circle',
+    up: 'arrow-down-circle',
+    down: 'arrow-up-circle',
     total: 'dollar-sign'
 }
 export function HighlightCard({
