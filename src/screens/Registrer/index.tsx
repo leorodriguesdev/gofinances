@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
+import { TransactionTypeButton } from "../../components/Form/TransactionTypeButton";
+
 
 
 import {
@@ -8,10 +11,17 @@ import {
   Header,
   Title,
   Form,
-  Fields
+  Fields,
+  TransactionTypes
 } from "./styles";
 
 export function Registrer() {
+  const [transactionType, setTransactiontype] = useState('');
+
+  function handleTransactionTypeSelect(type: 'up' | 'down') {
+    setTransactiontype(type);
+  }
+
   return (
     <Container>
       <Header>
@@ -26,6 +36,20 @@ export function Registrer() {
           <Input
             placeholder="Preço"
           />
+          <TransactionTypes>
+            <TransactionTypeButton
+              type="up"
+              title="Income"
+              onPress={() => handleTransactionTypeSelect('up')}
+              isActive={transactionType === 'up'}
+            />
+            <TransactionTypeButton
+              type="down"
+              title="Outcome"
+              onPress={() => handleTransactionTypeSelect('down')}
+              isActive={transactionType === 'down'}
+            />
+          </TransactionTypes>
         </Fields>
         <Button title="Enviar" />
       </Form>
