@@ -10,8 +10,8 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme  from './src/global/styles/theme';
-import { Registrer } from './src/screens/Registrer';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRoutes } from './src/routes/app.routes';
 
 export default function App() {
 const [fontsLoaded] = useFonts({
@@ -26,7 +26,9 @@ if(!fontsLoaded){
 
   return (
     <ThemeProvider theme={theme}>
-      <Registrer />
+      <NavigationContainer>
+      <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   )
 }
