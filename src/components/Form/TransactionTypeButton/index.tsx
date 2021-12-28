@@ -24,8 +24,7 @@ export function TransactionTypeButton({
             type={type}
         >
             <Button
-                {...rest}
-            >
+                {...rest}>
                 <Icon
                     name={icons[type]}
                     type={type}
