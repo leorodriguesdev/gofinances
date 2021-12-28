@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { InputForm } from "../../components/Form/InputForm";
-import { Modal } from "react-native";
+import { 
+  Modal, 
+  TouchableWithoutFeedback, 
+  Keyboard,
+  Alert
+ } from "react-native";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 import { TransactionTypeButton } from "../../components/Form/TransactionTypeButton";
@@ -34,10 +41,23 @@ export function Registrer() {
     name: "Categoria",
   });
 
+  const schema = Yup.object().shape({
+    name: Yup
+    .string()
+    .required("O nome é obrigatório"),
+    amount: Yup
+    .number()
+    .positive("O valor deve ser positivo")
+    .typeError("O valor deve ser um número")
+  });
+
   const { 
     control, 
-    handleSubmit 
-  } = useForm();
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
 
   function handleTransactionTypeSelect(type: 'up' | 'down') {
     setTransactiontype(type);
@@ -52,6 +72,13 @@ export function Registrer() {
   }
 
   function handleRegister(form: FormData) {
+
+    if(!transactionType)
+    return Alert.alert('Erro', 'Selecione o tipo de transação');
+
+    if(category.key === 'category')
+    return Alert.alert('Erro', 'Selecione uma categoria');
+
     const data = { 
       name: form.name,
       amount: form.amount,
@@ -63,6 +90,9 @@ export function Registrer() {
 
 
   return (
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+    >
     <Container>
       <Header>
         <Title>Cadastro</Title>
@@ -74,11 +104,16 @@ export function Registrer() {
             placeholder="Nome"
             name="name"
             control={control}
+            autoCapitalize="sentences"
+            autoCorrect={false}
+            error={errors.name && errors.name.message}
           />
           <InputForm
             name="amount"
             control={control}
             placeholder="Preço"
+            keyboardType="numeric"
+            error={errors.amount && errors.amount.message}
           />
           <TransactionTypes>
             <TransactionTypeButton
@@ -112,5 +147,7 @@ export function Registrer() {
         />
       </Modal>
     </Container>
+    </TouchableWithoutFeedback>
+
   );
 }
