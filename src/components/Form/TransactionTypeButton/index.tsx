@@ -3,8 +3,8 @@ import { RectButtonProps } from 'react-native-gesture-handler';
 import { Container, Title, Icon, Button } from "./styles";
 
 const icons = {
-    up: "arrow-up-circle",
-    down: "arrow-down-circle"
+    up: "arrow-down-circle",
+    down: "arrow-up-circle"
 }
 interface Props extends RectButtonProps {
     title: string;

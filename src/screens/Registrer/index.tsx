@@ -55,6 +55,7 @@ export function Registrer() {
     .number()
     .positive("O valor deve ser positivo")
     .typeError("O valor deve ser um número")
+    .required("Valor obrigatório"),
   });
 
   const { 
@@ -163,13 +164,13 @@ export function Registrer() {
           <TransactionTypes>
             <TransactionTypeButton
               type="up"
-              title="Income"
+              title="Entrada"
               onPress={() => handleTransactionTypeSelect('positive')}
               isActive={transactionType === 'positive'}
             />
             <TransactionTypeButton
               type="down"
-              title="Outcome"
+              title="Saída"
               onPress={() => handleTransactionTypeSelect('negative')}
               isActive={transactionType === 'negative'}
             />

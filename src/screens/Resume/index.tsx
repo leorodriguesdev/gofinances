@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from "react-native";
 import { VictoryPie } from 'victory-native';
@@ -6,6 +6,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { addMonths, subMonths, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useTheme } from "styled-components";
+import { useFocusEffect } from '@react-navigation/native';
 
 
 import { HistoryCard } from '../../components/HistoryCard';
@@ -36,20 +37,18 @@ interface TransactionData {
 interface CategoryData {
     key: string;
     name: string;
+    total: number;
     totalFormatted: string;
-    total: Number;
     color: string;
     percent: string;
 }
 
 export function Resume() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([]);
 
     function handleDateChange(action: 'next' | 'prev') {
-        setIsLoading(true);
-
         if (action === 'next') {
             setSelectedDate(addMonths(selectedDate, 1));
         } else {
@@ -60,6 +59,7 @@ export function Resume() {
     const theme = useTheme();
 
     async function loadData() {
+        setIsLoading(true);
         const dataKey = '@gofinances:transactions';
         const response = await AsyncStorage.getItem(dataKey);
         const responseFormatted = response ? JSON.parse(response) : [];
@@ -95,15 +95,15 @@ export function Resume() {
                         currency: 'BRL'
                     });
 
-                const Percent = `${(categorySum / expensivesTotal * 100).toFixed(0)}%`;
+                const percent = `${(categorySum / expensivesTotal * 100).toFixed(0)}%`;
 
                 totalByCategory.push({
                     key: category.key,
                     name: category.name,
-                    total: categorySum,
                     color: category.color,
+                    total: categorySum,
                     totalFormatted,
-                    percent: Percent
+                    percent
                 });
             }
         });
@@ -111,9 +111,9 @@ export function Resume() {
         setIsLoading(false);
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         loadData();
-    }, [selectedDate]);
+        },[selectedDate]));
     return (
         <Container>
             <Header>
@@ -140,7 +140,7 @@ export function Resume() {
                             </MonthSelectButtom>
 
                             <Month>
-                                {format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}
+                                { format(selectedDate, 'MMMM, yyyy', {locale: ptBR}) }
                             </Month>
 
                             <MonthSelectButtom onPress={() => handleDateChange('next')}>
@@ -151,17 +151,17 @@ export function Resume() {
                         <ChartContainer>
                             <VictoryPie
                                 data={totalByCategories}
-                                x="percent"
-                                y="total"
                                 colorScale={totalByCategories.map(category => category.color)}
                                 style={{
                                     labels: {
                                         fontSize: RFValue(18),
-                                        fill: '#fff',
+                                        fill: theme.colors.shape,
                                         fontWeight: 'bold'
                                     }
                                 }}
                                 labelRadius={75}
+                                x="percent"
+                                y="total"
                             />
                         </ChartContainer>
                         {
