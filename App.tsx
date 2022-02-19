@@ -16,6 +16,8 @@ import theme  from './src/global/styles/theme';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
 
+import { SighIn } from './src/screens/SighIn';
+
 export default function App() {
 const [fontsLoaded] = useFonts({
   Poppins_400Regular,
@@ -31,7 +33,7 @@ if(!fontsLoaded){
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar style="light" />
-      <AppRoutes />
+      <SighIn />
       </NavigationContainer>
     </ThemeProvider>
   )
