@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
 
 import { SighIn } from './src/screens/SighIn';
+import { AuthProvider } from './src/hooks/auth';
 
 export default function App() {
 const [fontsLoaded] = useFonts({
@@ -33,7 +34,10 @@ if(!fontsLoaded){
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar style="light" />
-      <SighIn />
+        <AuthProvider>
+          <SighIn />
+        </AuthProvider>
+
       </NavigationContainer>
     </ThemeProvider>
   )
