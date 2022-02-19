@@ -5,6 +5,7 @@ import AppleSvg from '../../assets/apple.svg';
 import GoogleSvg from '../../assets/google.svg';
 import LogoSvg from '../../assets/logo.svg';
 
+import { SignInSocialButtom } from "../../components/SignInSocialButtom";
 
 import {
     Container,
@@ -12,7 +13,8 @@ import {
     TitleWrapper,
     Title,
     SighInTitle,
-    Footer
+    Footer,
+    FooterWrapper
 } from './styles';
 
 export function SighIn() {
@@ -38,7 +40,16 @@ export function SighIn() {
                 </SighInTitle>
             </Header>
             <Footer>
-
+                <FooterWrapper>
+                    <SignInSocialButtom
+                        title="Entrar com Google"
+                        svg={GoogleSvg}
+                    />
+                    <SignInSocialButtom
+                        title="Entrar com Apple"
+                        svg={AppleSvg}
+                    />
+                </FooterWrapper>
             </Footer>
 
         </Container>
