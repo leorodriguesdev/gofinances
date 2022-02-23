@@ -21,14 +21,25 @@ import {
 
 export function SighIn() {
 
-    const { signInWithGoogle } = useAuth();
+    const { user, signInWithGoogle, signInWithApple } = useAuth();
 
     async function handleSignInWithGoogle() {
         try {
             await signInWithGoogle();
         } catch (error) {
             console.log(error);
-            Alert.alert('Erro', 'Erro ao realizar o login');
+            Alert.alert('Erro', 'Erro ao realizar o login com a conta Google');
+
+        }
+
+    }
+
+    async function handleSignInWithApple() {
+        try {
+            await signInWithApple();
+        } catch (error) {
+            console.log(error);
+            Alert.alert('Erro', 'Erro ao realizar o login com a conta Apple');
 
         }
 
@@ -67,6 +78,7 @@ export function SighIn() {
                     <SignInSocialButtom
                         title="Entrar com Apple"
                         svg={AppleSvg}
+                        onPress={handleSignInWithApple}
                     />
                 </FooterWrapper>
             </Footer>
