@@ -47,7 +47,7 @@ export function Dashboard() {
 
     const theme = useTheme();
 
-    const { signOut } = useAuth();
+    const { signOut, user } = useAuth();
 
     function getLastTransactionsDate(
         collection: DataListProps[],
@@ -154,10 +154,10 @@ export function Dashboard() {
                 <Header>
                     <UserWrapper>
                         <UserInfo>
-                            <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/74029443?v=4' }} />
+                            <Photo source={{ uri: user.photo }} />
                             <User>
                                 <UserGreeting>Olá,</UserGreeting>
-                                <UserName>Leonardo</UserName>
+                                <UserName>{user.name}</UserName>
                             </User>
                         </UserInfo>
 

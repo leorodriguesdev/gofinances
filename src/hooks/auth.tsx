@@ -31,7 +31,6 @@ interface IAuthContextData {
     signInWithApple(): Promise<void>;
     signOut(): Promise<void>;
     userStoragedLoading: boolean;
-
 }
 
 interface AuthorizationResponse {
@@ -89,11 +88,13 @@ function AuthProvider({ children }: AuthProviderProps) {
                 ],
             });
             if(credentials) {
+                const name = credentials.fullName!.givenName!;
+                const photo = `https//ui-avatars.com/api/?name=${name}?length=1`;
                 const userLogged = {
                     id: String(credentials.user),
                     email: credentials.email!,
-                    name: credentials.fullName!.givenName!,
-                    photo: undefined
+                    name,
+                    photo,
                 };
 
                 setUser(userLogged);
