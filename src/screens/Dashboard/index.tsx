@@ -5,6 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { HighlightCard } from "../../components/HighlightCard";
 import { TransactionCard, TransactionCardProps } from "../../components/TransactionCard";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 import {
     Container,
@@ -23,6 +24,7 @@ import {
     LogoutButton,
     LoadContainer
 } from "./styles";
+
 
 export interface DataListProps extends TransactionCardProps {
     id: string;
@@ -44,6 +46,8 @@ export function Dashboard() {
     const [highlightData, setHighlightData] = useState<highlightData>({} as highlightData);
 
     const theme = useTheme();
+
+    const { signOut } = useAuth();
 
     function getLastTransactionsDate(
         collection: DataListProps[],
@@ -157,7 +161,7 @@ export function Dashboard() {
                             </User>
                         </UserInfo>
 
-                        <LogoutButton onPress={() => { }}>
+                        <LogoutButton onPress={signOut}>
                             <Icon name="power" />
                         </LogoutButton>
 

@@ -17,7 +17,7 @@ import { Routes } from './src/routes';
 import { AppRoutes } from './src/routes/app.routes';
 
 import { SighIn } from './src/screens/SighIn';
-import { AuthProvider } from './src/hooks/auth';
+import { AuthProvider, useAuth } from './src/hooks/auth';
 
 export default function App() {
 const [fontsLoaded] = useFonts({
@@ -26,7 +26,9 @@ const [fontsLoaded] = useFonts({
   Poppins_700Bold
 });
 
-if(!fontsLoaded){
+const { userStoragedLoading } = useAuth();
+
+if(!fontsLoaded || userStoragedLoading){
   return <AppLoading/>
 }
 
