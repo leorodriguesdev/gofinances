@@ -13,7 +13,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme  from './src/global/styles/theme';
-import { NavigationContainer } from '@react-navigation/native';
+import { Routes } from './src/routes';
 import { AppRoutes } from './src/routes/app.routes';
 
 import { SighIn } from './src/screens/SighIn';
@@ -32,13 +32,10 @@ if(!fontsLoaded){
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
         <StatusBar style="light" />
         <AuthProvider>
-          <SighIn />
+          <Routes />
         </AuthProvider>
-
-      </NavigationContainer>
     </ThemeProvider>
   )
 }
